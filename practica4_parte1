@@ -1,0 +1,121 @@
+#!/bin/bash
+# ejercicio 1 practica 4(parte 1)
+orden=`sort  << DELIM
+England
+Spain
+France
+Italy
+
+
+DELIM`
+
+echo "Paises ordenados:"
+for pais in $orden
+do
+echo $pais
+done
+echo " "
+
+inver=`sort -r << INVER
+
+Spain
+Italy
+France
+England
+
+INVER`
+
+echo "Paises inversos:"
+for inverso in $inver
+do
+echo $inverso
+done
+echo " "
+
+echo "Por tamano del nombre:"
+sort -n  << GT
+England 7
+Spain 5
+Italy 5
+France 6
+
+GT
+echo " "
+
+echo "Tamano inverso:"
+sort -nr << JU
+Spain 5
+England 7
+France 6
+Italy 5
+
+JU
+
+echo " "
+
+total=`wc -w << AM
+England Suiza
+Spain
+France
+Italy
+USA
+Brasil
+AM`
+
+echo "El numero total de paises es: "$total" "
+echo " "
+exit 0
+
+#!/bin/bash
+# ejercicio 2 practica 4(parte 1)
+if [ $# != 1 ]
+then
+  echo "error: introduce UN argumento"
+else
+  num=0
+  tamaño=`expr length $1`
+  for i in `seq $tamaño`
+  do
+    letra=`echo $1 | cut -c$i`
+    case $letra in
+      M) num=`expr $num + 1000`
+      ;;
+      D) num=`expr $num + 500`
+      ;;
+      L) num=`expr $num + 50`
+      ;;
+      X) num=`expr $num + 10`
+      ;;
+      I) num=`expr $num + 1`
+      ;;
+    esac
+  done
+fi
+echo "tu numero es $num"
+
+#!/bin/bash
+# ejercicio 3 practica 4(parte 1)
+palabras=`cat << DELIM1
+uno
+dos
+tres
+DELIM1`
+
+numeros=`cat << DELIM2
+34
+56
+01
+DELIM2`
+
+for i in `seq 5`
+do
+  for j in `seq $1`
+  do
+    n1=`expr $RANDOM % 3 + 1`
+    n2=`expr $RANDOM % 3 + 1`
+    pal=`echo $palabras | cut -d " " -f $n1`
+    num=`echo $numeros | cut -d " " -f $n2`
+    echo -n "$pal$num"
+  done
+  echo ""
+done

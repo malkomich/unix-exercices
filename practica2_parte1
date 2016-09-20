@@ -1,0 +1,163 @@
+#!bin/bash
+# ejercicio 1 practica 2(parte1)
+if [ $1 ]
+then
+  echo "La variable existe"
+else
+  echo "La variable no existe"
+fi
+
+#!/bin/bash
+# ejercicio 2 practica 2(parte 1)
+var1=ola
+export var1
+env | grep ^var1
+unset var1
+
+#!/bin/bash
+# ejercicio 3 practica 2(parte 1)
+echo "Numero de argumentos recibidos" ; echo $#
+echo $*
+echo "El nombre del script es: " ; echo $0
+echo "El argumento 1 es " ; echo $1
+echo "El argumento 2 es " ; echo $2
+shift
+echo "Se ha producido un desplazamiento"
+echo "Ahora el numero de argumentos es " ; echo $#
+echo "Ahora el argumento 1 es " ; echo $1
+shift
+echo "Y el argumentos 2 ahora es " ; echo $2
+
+#!/bin/bash
+# ejercicio 4 practica 2(parte 1)
+if [ $# != 0 ]
+then
+  echo "Numero de argumentos recibidos" ; echo $#
+  echo $*
+  echo "El nombre del script es: " ; echo $0
+  echo "El argumento 1 es " ; echo $1
+  echo "El argumento 2 es " ; echo $2
+  shift 
+  echo "Se ha producido un desplazamiento"
+  echo "Ahora el numero de argumentos es " ; echo $#
+  echo "Ahora el argumento 1 es " ; echo $1
+  shift
+  echo "Y el argumentos 2 ahora es " ; echo $2
+else
+  echo "No se han introducido argumentos"
+  exit 1
+fi
+
+#!/bin/bash
+# ejercicio 5 practica 2(parte 1)
+maximo=`ls -1 /home/infog | wc -l`
+echo "numero maximo: $maximo"
+conectados=`who | wc -l`
+echo "usuarios conectados: $conectados"
+
+#!/bin/bash
+#ejercicio 6 practica 2(parte 1)
+if [ $# != 1 ]
+then
+  echo "error: solo 1 argumento"
+else
+  usuario=`ls $HOME/.. | grep $1`
+if [ -z $usuario ]
+  then
+    echo "$1 no es un usuario del sistema"
+    exit 66
+  else
+    ls $HOME/../$1
+    conectado=`who | grep $1`
+    if [ -z $conectado ]
+    then
+      echo "el usuario $1 NO está conectado"
+      exit 6
+    else
+      echo "el usuario $1 está conectado"
+      exit 0
+    fi
+  fi
+fi
+
+#!/bin/bash
+#ejercicio 7 practica 2(parte 1)
+echo "Introduce un directorio valido"
+read dir
+if [ -d $dir ]
+then
+  set -- `ls $dir`
+  echo "Los archivos contenidos en el directorio son: " ; echo "$*"
+  echo "El numero de ficheros y directorios es: $#"
+  set -- `ls -l $dir | grep ^d | tr -s " " | cut -d " " -f 9`
+  echo ""
+  echo "Ahora solo los subdirectorios: " ; echo "$*"
+  echo "Ahora el numero de argumentos es: $#"
+else
+  echo "El directorio $dir no es valido"
+fi
+
+#!/bin/bash
+#ejercicio 7 practica 2(parte 1)
+dir=$1
+if [ -d $dir ]
+then
+  set -- `ls $dir`
+  echo "Los archivos contenidos en el directorio son: " ; echo "$*"
+  echo "El numero de ficheros y directorios es: $#"
+  set -- `ls -l $dir | grep ^d | tr -s " " | cut -d " " -f 9`
+  echo ""
+  echo "Ahora solo los subdirectorios: " ; echo "$*"
+  echo "Ahora el numero de argumentos es: $#"
+else
+  echo "El directorio $1 no es valido"
+fi
+
+#!/bin/bash
+# ejercicio 9 practica 2(parte 1)
+if [ $# != 2 ]
+then
+  echo "Error: no has introducido 2 argumentos"
+  exit 1
+else
+  exit 0
+fi
+
+#!/bin/bash
+# ejercicio 10 practica 2(parte 1)
+if [ $# != 1 ]
+then
+  echo "Error: Introduce 1 argumento"
+else
+  var=`cd ./$1`
+  if [ $? == 0 ]
+  then
+    num_fich=`ls -l ./$1 | grep ^- | wc -l`
+    echo "numero de ficheros: $num_fich"
+  else
+    echo "dame la ruta completa"
+    read dir
+    num_fich=`ls -l $dir | grep ^- | wc -l`
+    echo "numero de ficheros: $num_fich"
+  fi
+fi
+
+#!/bin/bash
+# ejercicio 11 practica 2(parte 1)
+# el numero minimo de archivos se introduce como argumento
+num_archivos=`ls -1 | wc -l`
+if [ $num_archivos -ge $1 ]
+then
+  ls -l
+fi
+
+#!/bin/bash
+# ejercicio 12 practica 2(parte 1)
+num_fich=`ls -l | grep ^- | wc -l`
+if [ $num_fich -gt 3 ]
+then
+  echo "Hay mas de 3 ficheros"
+else
+  echo "No hay mas de 3 ficheros"
+fi
+ls -l | grep ^-

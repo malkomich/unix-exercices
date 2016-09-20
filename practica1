@@ -1,0 +1,104 @@
+#!/bin/bash
+# ejercicio 1 practica 1
+num_fich=`ls -l|cut -c 5-7|grep "rwx"|wc -l`
+echo $num_fich
+
+#!/bin/bash
+# ejercicio 2 practica 1
+who am i
+who|wc -l
+date
+exit
+
+#!/bin/bash
+# ejercicio 3 pratica 1
+who am i
+who|wc -l
+date
+exit
+echo "Hola Mundo"
+
+#!/bin/bash
+# ejercicio 4 practica 1
+preposicion=para
+objeto=${preposicion}caidas
+echo $objeto
+# la salida es "paracaidas"
+
+#!/bin/bash
+# ejercicio 5 practica 1
+echo "2 variables:"
+read var1 var2
+echo $var1 $var2
+echo "$var1 $var2"
+echo '$var1 $var2'
+echo ${var1}var2
+exit
+
+#!/bin/bash
+# ejercicio 7 practica 1
+echo -e "ola\nk tal?\ntabulacion\thasta aqui"
+echo -e "caracteres ASCII : 7:\007, 11:\011, 12:\012"
+echo -e "espacio atras\b,\ntabulado vertical\vhasta aqui"
+echo -e "retorno de carro\r,salto de pagina\f,suprimir caracter\c,y ya\\"
+
+#!bin/bash
+# ejercicio 8 practica 1
+echo "escribe tu nombre de usuario"
+read usuario
+fecha=`ls -l $HOME/.. | grep $usuario | cut -c 35-41`
+numfich=`ls -l $HOME | grep -v ^d | wc -l`
+numdir=`ls -l $HOME | grep ^d | wc -l`
+echo " La fecha de creacion es $fecha"
+echo " El numero de ficheros es $numfich"
+echo " El numero de subdirectorios es $numdir"
+exit
+
+#!/bin/bash
+# ejercicio 9 practica 1
+dir='ls -l'
+set
+bash
+test -n dir
+exit
+
+#!/bin/bash
+# ejercicio 10 practica 1
+echo "dime 1 directorio"
+read dir
+echo "aora 1 cadena de caracteres"
+read cad
+archivos=`ls -l $dir | grep $cad | cut -d " " -f 1`
+archivos="$archivos `ls -l $dir | grep $cad | cut -d " " -f 9`"
+echo $archivos
+exit
+
+#!/bin/bash
+# ejercicio 11 practica 1
+echo "dime 1 directorio"
+read dir
+echo "aora 1 cadena de caracteres"
+read cad
+archivos=`ls -l $dir | grep $cad | cut -d " " -f 1`
+echo "1ºvalor devuelt: $?"
+archivos="$archivos `ls -l $dir | grep $cad | cut -d " " -f 9`"
+echo "2ºvalor devuelto: $?"
+echo $archivos
+exit
+
+#!/bin/bash
+# ejercicio 12 practica 1
+echo "Introduce un numero del 1 al 3 indicando la modificacion del ejercicio que deseas ejecutar"
+read option
+case $option in
+  1) exit 0
+  ;;
+  2) exit 15
+  ;;
+  3) exit -200
+# salida=56
+  ;;
+  *) echo "error"
+     exit 1
+  ;;
+esac

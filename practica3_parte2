@@ -1,0 +1,266 @@
+#!/bin/bash
+# ejercicio 1 practica 3(parte 2)
+ls -l $1 | grep ^- | tr -s " " | cut -d " " -f 5,9
+echo ""
+echo "Otra forma:"
+du -cah $1
+
+#!/bin/bash
+# ejercicio 2 practica 3(parte 2)
+num_dir=`ls -l $1 | grep ^d | wc -l`
+echo "El numero de subdirectorios de dicho directorio es: $num_dir"
+
+#!/bin/bash
+# ejercicio 3 practica 3(parte 2)
+num_lineas=0
+for i in $*
+do
+  if [ -f $i ]
+  then
+    x=`cat $i | wc -l`
+    num_lineas=`expr $num_lineas + $x`
+  fi
+done
+echo "Suma total de lineas: $num_lineas"
+echo ""
+echo "Otra forma:"
+num_lineas=0
+while [ $# != 0 ]
+do
+  if [ -f $1 ]
+  then
+    x=`cat $1 | wc -l`
+    num_lineas=`expr $num_lineas + $x`
+  fi
+  shift
+done
+echo "Suma total de lineas: $num_lineas"
+
+#!/bin/bash
+# ejercicio 4 practica 3(parte 2)
+a=0
+b=1
+i=0
+while [ $i -lt $1 ]
+do
+  echo -e "\n"$a
+  sum=`expr $a + $b`
+  a=$b
+  b=$sum
+  i=`expr $i + 1`
+done
+
+#!/bin/bash
+# ejercicio 5 practica 3(parte 2)
+factorial=1
+for i in `seq $1`
+do
+ factorial=`expr $factorial \* $i`
+done
+echo $factorial
+
+#!/bin/bash
+# ejercicio 6 practica 3(parte 2)
+for i in `seq 3`
+do
+  echo $1
+  shift
+done
+
+#!/bin/bash
+# ejercicio 7 practica 3(parte 2)
+for i in $*
+do
+  echo $i
+done
+
+#!/bin/bash
+# ejercicio 8 practica 3(parte 2)
+for i in $*
+do
+  echo $i
+  shift
+done
+# aqui el shift no afecta
+
+#!/bin/bash
+# ejercicio 9 practica 3(parte 2)
+salida=0
+long=`expr length $1`
+cont=1
+cont2=$long
+for i in `seq $long`
+do
+  l1=`echo $1 | cut -c$cont`
+  l2=`echo $1 | cut -c$cont2`
+  if [ $l1 != $l2 ]
+  then
+    salida=1
+  fi
+    cont=`expr $cont + 1`
+    cont2=`expr $cont2 - 1`
+done
+if [ $salida == 0 ]
+then
+  echo "es palindromo"
+else
+  echo "no es palindromo"
+fi
+exit $salida
+
+#!/bin/bash
+# ejercicio 10 practica 3(parte 2)
+x=0
+for i in `seq $#`
+do
+  long=`expr length $1`
+  x=`expr $x + $long`
+  shift
+done
+echo "la salida es $x"
+exit $x
+
+#!/bin/bash
+# ejercicio 12 practica 3(parte 2)
+salida=0
+if [ $# -ge 2 ]
+then
+  if [ -d $1 ]
+  then
+    dir=$1
+    shift
+    for i in `seq $#`
+    do
+      if [ -f $1 ]
+      then
+        cat $1 >> $dir/todos.txt
+      else
+        echo "$1 no es un fichero"
+        salida=1
+      fi
+      shift
+    done
+  else
+    echo "$1 no es un directorio"
+    salida=2
+  fi
+else
+  echo "Error: MINIMO 2 ARGUMENTOS"
+  salida=3
+fi
+if [ $salida == 0 ]
+then
+  echo "Todo ha ido bien ;)"
+fi
+exit $salida
+###################################################################
+# La salida sera:                                                           
+#--0 si no ha habido fallos                                                 
+#--1 si alguno de los argumentos dados tras el directorio no era un fichero
+#--2 si el primer argumento dado no era un directorio                       
+#--3 si se han introducido menos de 2 argumentos                            
+####################################################################
+
+#!/bin/bash
+# ejercicio 13 practica 3(parte 2)
+# version con piramide rellena
+salida=1
+if [ $# != 1 ]
+then
+  echo "Error: No has introducido UN parametro"
+else
+  if [ $1 -lt 0 ]
+  then
+    echo "Error: El argumento no puede ser negativo"
+  else
+    if [ `expr $1 % 2` != 1 ]
+    then
+      echo "Error: Debes introducir un parametro impar"
+    else
+      salida=0
+      x=`expr $1 - 1`
+      for i in `seq $1`
+      do
+        for j in `seq $x`
+	do
+	  echo -n " "
+	done
+        n=`expr 0 + $i`
+        until [ $n == 0 ]
+        do
+          echo -n "*"
+	  echo -n " "
+	  n=`expr $n - 1`
+	done
+	x=`expr $x - 1`
+	echo ""
+      done
+    fi
+  fi
+fi
+exit $salida
+
+#!/bin/bash
+# ejercicio 13 practica 3(parte 2)
+# version con piramide hueca
+salida=1
+if [ $# != 1 ]
+then
+  echo "Error: No has introducido UN parametro"
+else
+  if [ $1 -lt 0 ]
+  then
+    echo "Error: El argumento no puede ser negativo"
+  else
+    if [ `expr $1 % 2` != 1 ]
+    then
+      echo "Error: Debes introducir un parametro impar"
+    else
+      salida=0
+      x=`expr $1 - 1`
+      for i in `seq $1`
+      do
+        for j in `seq $x`
+	do
+	  echo -n " "
+	done
+	case $i in
+        1) echo -n "*"
+	;;
+	$1) for k in `seq $1`
+	do
+	  echo -n "*"
+	  echo -n " "
+	done
+	;;
+	*) echo -n "*"
+	y=`expr $i - 1`
+	y=`expr $y "*" 2 - 1`
+	for k in `seq $y`
+	do
+	  echo -n " "
+	done
+        echo -n "*"
+	esac
+	x=`expr $x - 1`
+	echo ""
+      done
+    fi
+  fi
+fi
+exit $salida
+
+#!/bin/bash
+# ejercicio 17 practica 3(parte 2)
+max=20
+ast="*"
+for i in `seq $1`
+do
+  num=`expr $RANDOM % $max + 1`
+  for j in `seq $num`
+  do
+    echo -n "*"
+  done
+  echo ""
+done
+

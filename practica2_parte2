@@ -1,0 +1,155 @@
+#!/bin/bash
+# ejercicio 1 practica 2(parte 2)
+echo "Introduce dos variables numericas"
+read var1 var2
+salida=0
+result=`expr $var1 + $var2`
+if [ $? == 2 ]
+then
+  echo "Error: debes introducir DOS variables NUMERICAS"
+  salida=1
+else
+  result=`expr $var1 + $var2`
+  echo "*El resultado de la suma es: $result"
+  result=`expr $var1 - $var2`
+  echo "*El resultado de la resta es: $result"
+  result=`expr $var1 \* $var2`
+  echo "*El resultado de la multiplicacion es: $result"
+  if [ $var2 == 0 ]
+  then
+    echo "*No se puede dividir por cero"
+  else
+    result=`expr $var1 / $var2`
+    result1=`expr $var1 % $var2`
+    echo -e "*El resultado de la division es: \n  -Cociente: $result \n  -Resto: $result1"
+  fi
+fi
+exit $salida
+
+#!/bin/bash
+# ejercicio 2 practica 2(parte 2)
+salida=0
+result=`expr $1 + $2`
+if [ $? == 2 ]
+then
+  echo "Error: debes introducir DOS variables NUMERICAS"
+  salida=1
+else
+  result=`expr $1 + $2`
+  echo "*El resultado de la suma es: $result"
+  result=`expr $1 - $2`
+  echo "*El resultado de la resta es: $result"
+  result=`expr $1 \* $2`
+  echo "*El resultado de la multiplicacion es: $result"
+  if [ $2 == 0 ]
+  then
+    echo "*No se puede dividir por cero"
+  else
+    result=`expr $1 / $2`
+    result1=`expr $1 % $2`
+    echo -e "*El resultado de la division es: \n  -Cociente: $result \n  -Resto: $result1"
+  fi
+fi
+exit $salida
+
+#!/bin/bash
+# ejercicio 3 practica 2(parte 2)
+echo "Primera cadena"
+read cad1
+echo "Segunda cadena"
+read cad2
+var1=`expr $cad1 + 0`
+c1=$?
+var2=`expr $cad2 + 0`
+c2=$?
+if [ $c1 == 2 -a $c2 == 2 ]
+then
+  cad3=$cad1$cad2
+  echo "concatenacion de cadenas: $cad3"
+  cad3=${cad1:3}
+  echo "extraccion de subcadenas: $cad3"
+  cad3=${cad2:2:4}
+  echo "extraccion de subcadenas: $cad3"
+  cad3=`expr length $cad2`
+  echo "longitud de la cadena2: $cad3"
+  cad3=`expr index $cad1 i`
+  echo "posicion de la cadena1 donde esta el caracter i: $cad3"
+  test $cad1 == $cad2
+  if [ $? -eq 0 ]
+  then
+    echo "las cadenas son iguales"
+  else
+    echo "las cadenas son distintas"
+  fi
+else
+  echo "no son alfanumericas"
+fi
+
+#!/bin/bash
+# ejercicio 4 practica 2(parte 2)
+var1=`expr $1 + 0`
+c1=$?
+var2=`expr $2 + 0`
+c2=$?
+if [ $c1 == 2 -a $c2 == 2 ]
+then
+  cad1=$1
+  cad2=$2
+  cad3=$cad1$cad2
+  echo "concatenacion de cadenas: $cad3"
+  cad3=${cad1:3}
+  echo "extraccion de subcadenas: $cad3"
+  cad3=${cad2:2:4}
+  echo "extraccion de subcadenas: $cad3"
+  cad3=`expr length $cad2`
+  echo "longitud de la cadena2: $cad3"
+  cad3=`expr index $cad1 i`
+  echo "posicion de la cadena1 donde esta el caracter i: $cad3"
+  test $cad1 == $cad2
+  if [ $? -eq 0 ]
+  then
+    echo "las cadenas son iguales"
+  else
+    echo "las cadenas son distintas"
+  fi
+else
+  echo "no son alfanumericos los argumentos"
+fi
+
+#!/bin/bash
+# ejercicio 5 practica 2(parte 2)
+echo "Introduce un nombre de usuario"
+read user
+sesiones=`who|grep $user|wc -l`
+if [ $sesiones == 0 ]
+then
+  ls $HOME/../$user
+elif [ $sesiones == 1 ]
+then
+  ps -u $user
+else
+  ps -fu $user
+fi
+
+#!/bin/bash
+# ejercicio 6 practica 2(parte 2)
+echo "Introduce un nombre de usuario"
+read user
+sesiones=`who|grep $user|wc -l`
+case $sesiones in
+  0) ls $HOME/../$user
+  ;;
+  1) ps -u $user
+  ;;
+  *) ps -fu $user
+esac
+
+#!/bin/bash
+# ejercicio 7 practica 2(parte 2)
+if [ $# -ne 1 ]
+then
+  echo "error: solo un argumento"
+else	
+  usuarios=`who | tr -s " " | cut -d" " -f1 | grep $1`
+  echo "los usuarios que tienen esa cadena de caracteres son: $usuarios"
+fi
